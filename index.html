@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mumeidayo</title>
+    
+    <!-- Discord/Twitter Card Meta Tags -->
+    <meta property="og:title" content="mumeidayo">
+    <meta property="og:description" content="むめーの自己紹介サイト的な？">
+    <meta property="og:image" content="./スクリーンショット 2025-09-21 19.20.44.png">
+    <meta property="og:url" content="https://mumeidayo.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="mumeidayo">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="mumeidayo">
+    <meta name="twitter:description" content="むめーの自己紹介サイト的な？">
+    <meta name="twitter:image" content="./スクリーンショット 2025-09-21 19.20.44.png">
+    
+    <meta name="description" content="むめーの自己紹介サイト的な？">
+    <meta name="author" content="mumeidayo">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Crimson+Text:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Playfair Display', Georgia, serif;
+            background: black;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .entry-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .entry-text {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .main-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .profile-container {
+            background: rgba(30, 30, 40, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            width: 600px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-name {
+            color: #5ba3ff;
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(91, 163, 255, 0.5);
+            letter-spacing: 1px;
+        }
+
+        .profile-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: auto;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .github { background: #333; }
+        .youtube { background: #333; }
+        .website { background: #666; }
+
+        .social-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: snowfall 8s infinite linear;
+        }
+
+        @keyframes snowfall {
+            0% { 
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: snowdrift 12s infinite linear;
+        }
+
+        @keyframes snowdrift {
+            0% { 
+                transform: translateY(-100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="video-background" autoplay muted loop>
+        <source src="4k winter.mp4" type="video/mp4">
+    </video>
+    
+    <div class="overlay"></div>
+    <div class="stars" id="stars"></div>
+    <div class="floating-particles" id="particles"></div>
+    
+    <div id="entry-screen" class="entry-screen">
+        <div class="entry-text">𝕔𝕝𝕚𝕔𝕜 𝕠𝕣 𝕡𝕣𝕖𝕤𝕤 𝕖𝕟𝕥𝕖𝕣</div>
+    </div>
+    
+    <div id="main-content" class="main-content">
+        <div class="profile-container fade-in">
+            <img src="スクリーンショット 2025-09-21 19.20.44.png" alt="mumeidayo" class="profile-image">
+            <h1 class="profile-name">𝘮𝘶𝘮𝘦𝘪𝘥𝘢𝘺𝘰</h1>
+            <p class="profile-subtitle">𝑑𝑖𝑠𝑐𝑜𝑟𝑑 @𝑗𝑓𝟑ℎ</p>
+            
+            <div class="social-icons">
+                <a href="https://github.com/mume-dayo" class="social-icon github" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/@mumeidazei" class="social-icon youtube" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </a>
+                <a href="https://mumeidayo.com" class="social-icon website" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <audio id="background-music" preload="auto" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const entryScreen = document.getElementById('entry-screen');
+        const mainContent = document.getElementById('main-content');
+        const backgroundMusic = document.getElementById('background-music');
+        const starsContainer = document.getElementById('stars');
+        const particlesContainer = document.getElementById('particles');
+        let hasEntered = false;
+
+        function createStars() {
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = '-10px';
+                star.style.width = (Math.random() * 4 + 2) + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 8 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 6) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = '-10px';
+                particle.style.width = (Math.random() * 6 + 3) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 12 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+
+        function enterSite() {
+            if (hasEntered) return;
+            hasEntered = true;
+            
+            entryScreen.style.opacity = '0';
+            entryScreen.style.transition = 'opacity 1.5s ease-out';
+            
+            setTimeout(() => {
+                entryScreen.classList.add('hidden');
+                mainContent.style.display = 'flex';
+                
+                backgroundMusic.volume = 0.2;
+                backgroundMusic.play().catch(e => {
+                    console.log('音楽の自動再生がブロックされました:', e);
+                });
+            }, 1500);
+        }
+
+        document.addEventListener('click', enterSite);
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.code === 'Enter') {
+                enterSite();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            createParticles();
+            backgroundMusic.volume = 0.2;
+        });
+    </script>
+</body>
+</html>
