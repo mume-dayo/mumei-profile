@@ -259,7 +259,7 @@
     </style>
 </head>
 <body>
-    <video id="video-background" autoplay muted loop>
+    <video id="video-background" autoplay loop>
         <source src="movie.mp4" type="video/mp4">
     </video>
     
@@ -298,14 +298,10 @@
     </div>
 
 
-    <audio id="background-music" preload="auto" loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
         const entryScreen = document.getElementById('entry-screen');
         const mainContent = document.getElementById('main-content');
-        const backgroundMusic = document.getElementById('background-music');
+        const backgroundMusic = document.getElementById('video-background');
         const starsContainer = document.getElementById('stars');
         const particlesContainer = document.getElementById('particles');
         let hasEntered = false;
@@ -350,9 +346,10 @@
                 entryScreen.classList.add('hidden');
                 mainContent.style.display = 'flex';
                 
+                backgroundMusic.muted = false;
                 backgroundMusic.volume = 0.2;
                 backgroundMusic.play().catch(e => {
-                    console.log('音楽の自動再生がブロックされました:', e);
+                    console.log('音声の自動再生がブロックされました:', e);
                 });
             }, 1500);
         }
