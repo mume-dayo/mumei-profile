@@ -263,7 +263,7 @@
     </style>
 </head>
 <body>
-    <video id="video-background" loop>
+    <video id="video-background" loop playsinline webkit-playsinline>
         <source src="movie.mp4" type="video/mp4">
     </video>
     
@@ -343,19 +343,20 @@
             if (hasEntered) return;
             hasEntered = true;
             
+            backgroundMusic.muted = false;
+            backgroundMusic.volume = 0.2;
+            backgroundMusic.currentTime = 0;
+            const playPromise = backgroundMusic.play();
+            if (playPromise) {
+                playPromise.catch(e => console.log('音声の再生がブロックされました:', e));
+            }
+
             entryScreen.style.opacity = '0';
             entryScreen.style.transition = 'opacity 1.5s ease-out';
             
             setTimeout(() => {
                 entryScreen.classList.add('hidden');
                 mainContent.style.display = 'flex';
-                
-                backgroundMusic.muted = false;
-                backgroundMusic.volume = 0.2;
-                backgroundMusic.currentTime = 0;
-                backgroundMusic.play().catch(e => {
-                    console.log('音声の自動再生がブロックされました:', e);
-                });
             }, 1500);
         }
 
