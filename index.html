@@ -200,28 +200,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .decoration-input {
-            margin-top: 20px;
-            width: 100%;
-            max-width: 360px;
-        }
-
-        .decoration-input input {
-            width: 100%;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(0, 0, 0, 0.35);
-            color: #fff;
-            font-family: inherit;
-            font-size: 0.8rem;
-            outline: none;
-        }
-
-        .decoration-input input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
 
         .stars {
             position: fixed;
@@ -344,9 +322,6 @@
                     </svg>
                 </a>
             </div>
-            <div class="decoration-input">
-                <input type="text" id="decoration-url" placeholder="Discord デコレーション URL を貼って反映" autocomplete="off" spellcheck="false">
-            </div>
         </div>
     </div>
 
@@ -423,22 +398,20 @@
             backgroundMusic.volume = 0.2;
         });
 
-        (function setupDecorationInput() {
-            var input = document.getElementById('decoration-url');
+        (function setupDecoration() {
             var deco = document.querySelector('.avatar-decoration');
-            if (!input || !deco) return;
-            var saved = localStorage.getItem('decoUrl');
-            if (saved) {
-                deco.src = saved;
-                input.value = saved;
+            if (!deco) return;
+            var params = new URLSearchParams(location.search);
+            var v = params.get('deco') || params.get('decoration');
+            if (!v && location.hash) {
+                var m = location.hash.match(/(?:^|[#&])(?:deco|decoration)=([^&]+)/);
+                if (m) v = decodeURIComponent(m[1]);
             }
-            input.addEventListener('input', function () {
-                var v = input.value.trim();
-                if (v) {
-                    deco.src = v;
-                    localStorage.setItem('decoUrl', v);
-                }
-            });
+            if (!v) v = localStorage.getItem('decoUrl');
+            if (v) {
+                deco.src = v;
+                localStorage.setItem('decoUrl', v);
+            }
         })();
     </script>
 </body>
