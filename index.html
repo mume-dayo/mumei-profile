@@ -119,14 +119,31 @@
             position: relative;
         }
 
+        .avatar-wrap {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+
         .profile-image {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            margin-bottom: 20px;
+            margin-bottom: 0;
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             transition: transform 0.3s ease;
+        }
+
+        .avatar-decoration {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            pointer-events: none;
         }
 
         .profile-image:hover {
@@ -277,7 +294,10 @@
     
     <div id="main-content" class="main-content">
         <div class="profile-container fade-in">
-            <img src="profile-image.png?v=4" alt="mumeidayo" class="profile-image">
+            <div class="avatar-wrap">
+                <img src="profile-image.png?v=5" alt="mumeidayo" class="profile-image">
+                <img src="avatar-decoration.png?v=5" alt="" class="avatar-decoration" aria-hidden="true">
+            </div>
             <h1 class="profile-name">mumeidayo</h1>
             <p class="profile-subtitle">discord @ltrw</p>
             
